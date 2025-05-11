@@ -5,10 +5,14 @@ from aqt import mw, gui_hooks
 from aqt.qt import Qt, QWidget, QAction
 from .sidebar import ReferenceSidebar
 from .config import Config, ensure_config
+from .manage import ManageDialog
 
 addon_dir = Path(__file__).parent
 config_path = addon_dir / "ref_images.json"
 config: Config = ensure_config(config_path)
+
+manage_act = mw.form.menuTools.addAction("Reference Images…")
+manage_act.triggered.connect(lambda: ManageDialog(config).exec())
 
 sidebar = ReferenceSidebar(config, config_path)
 try:
