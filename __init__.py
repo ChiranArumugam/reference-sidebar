@@ -2,7 +2,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 from aqt import mw, gui_hooks
-from aqt.qt import Qt, QWidget
+from aqt.qt import Qt, QWidget, QAction
 from .sidebar import ReferenceSidebar
 from .config import Config, ensure_config
 
@@ -19,6 +19,19 @@ except AttributeError:
 mw.addDockWidget(RIGHT_AREA, sidebar)
 sidebar.hide()
 
+# ---------- Tools menu toggle --------------------------------------------
+toggle_act = QAction("Reference Sidebar", mw)
+toggle_act.setShortcut("Alt+R")
+
+def _toggle():
+    vis = not sidebar.isVisible()
+    sidebar.setVisible(vis)
+    toggle_act.setChecked(vis)
+
+toggle_act.setCheckable(True)
+toggle_act.triggered.connect(_toggle)
+mw.form.menuTools.addAction(toggle_act)
+
 def on_reviewer_show(card):
     deck_id = str(card.did)
     images = config.deck_to_images.get(deck_id, [])
@@ -29,7 +42,6 @@ def on_reviewer_show(card):
     else:
         img_path = None
     sidebar.show_image_for_deck(deck_id, img_path)
-    sidebar.show()
 
 gui_hooks.reviewer_did_show_question.append(on_reviewer_show)
 

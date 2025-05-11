@@ -1,9 +1,9 @@
 from __future__ import annotations
 from pathlib import Path
 from aqt import mw
-from aqt.qt import (QDockWidget, QLabel, QScrollArea, QVBoxLayout,
-                    QWidget, QPixmap, Qt, QPushButton,
-                    QFileDialog, QComboBox)
+from aqt.qt import (QDockWidget, QLabel, QScrollArea, QVBoxLayout, QHBoxLayout,
+                    QWidget, QPixmap, Qt, QPalette,
+                    QPushButton, QFileDialog, QComboBox)
 
 try:
     ALIGN_TOP = Qt.AlignmentFlag.AlignTop
@@ -20,8 +20,22 @@ class ReferenceSidebar(QDockWidget):
         self._cfg = config
         self._cfg_path = config_path
         self.current_deck_id: str | None = None
+
+        # --- image label & scroll area -----------------------------------
         self._img_label = QLabel("No image")
         self._img_label.setAlignment(ALIGN_TOP | ALIGN_LEFT)
+        
+        # cross-Qt palette role -----------------------------------------------------
+        try:                 # Qt6
+            BASE_ROLE = QPalette.ColorRole.Base
+        except AttributeError:  # Qt5
+            BASE_ROLE = QPalette.Base
+
+        self._img_label.setBackgroundRole(BASE_ROLE)
+
+        self._orig_pix: QPixmap | None = None   # unscaled copy
+        self._zoom = 1.0
+
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
         scroll.setWidget(self._img_label)
@@ -29,11 +43,26 @@ class ReferenceSidebar(QDockWidget):
         self._combo = QComboBox()
         self._combo.currentIndexChanged.connect(self._on_combo_change)
 
+        # --- zoom buttons -----------------------------------
+        zoom_in_btn = QPushButton("+")
+        zoom_in_btn.setFixedWidth(26)
+        zoom_in_btn.clicked.connect(lambda: self._change_zoom(1.25))
+
+        zoom_out_btn = QPushButton("–")
+        zoom_out_btn.setFixedWidth(26)
+        zoom_out_btn.clicked.connect(lambda: self._change_zoom(0.8))
+
+        zoom_row = QHBoxLayout()
+        zoom_row.addWidget(self._combo)
+        zoom_row.addStretch(1)
+        zoom_row.addWidget(zoom_out_btn)
+        zoom_row.addWidget(zoom_in_btn)
+
         upload_btn = QPushButton("Upload Image")
         upload_btn.clicked.connect(self._on_upload)
         
         layout = QVBoxLayout()
-        layout.addWidget(self._combo)
+        layout.addLayout(zoom_row)
         layout.addWidget(upload_btn)
         layout.addWidget(scroll)
         container = QWidget()
@@ -84,10 +113,36 @@ class ReferenceSidebar(QDockWidget):
 
     def _set_image(self, img_path: Path | None):
         if img_path and img_path.exists():
-            pix = QPixmap(str(img_path))
-            self._img_label.setPixmap(pix)
+            self._orig_pix = QPixmap(str(img_path))
+            self._zoom = 1.0
+            self._apply_zoom()
         else:
+            self._orig_pix = None
             self._img_label.setText("No image for this deck.\n\nClick 'Upload Image' to add one.")
+
+    def _change_zoom(self, factor: float):
+        if not self._orig_pix:
+            return
+        self._zoom = max(0.25, min(4.0, self._zoom * factor))
+        self._apply_zoom()
+
+    def _apply_zoom(self):
+        if not self._orig_pix:
+            return
+        scaled = self._orig_pix.scaled(
+            self._orig_pix.width() * self._zoom,
+            self._orig_pix.height() * self._zoom,
+            Qt.AspectRatioMode.KeepAspectRatio,
+            Qt.TransformationMode.SmoothTransformation,
+        )
+        self._img_label.setPixmap(scaled)
+
+    def wheelEvent(self, event):
+        if event.modifiers() & Qt.KeyboardModifier.ControlModifier:
+            self._change_zoom(1.25 if event.angleDelta().y() > 0 else 0.8)
+            event.accept()
+        else:
+            super().wheelEvent(event)
 
     def _populate_dropdown(self):
         """Load current deck's image list into the combo."""
