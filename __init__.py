@@ -24,7 +24,8 @@ def on_reviewer_show(card):
     images = config.deck_to_images.get(deck_id, [])
     media_dir = Path(mw.col.media.dir())
     if images:
-        img_path = media_dir / images[0]["fname"]
+        preferred = config.last_selected.get(deck_id, images[0]["fname"])
+        img_path = media_dir / preferred
     else:
         img_path = None
     sidebar.show_image_for_deck(deck_id, img_path)
