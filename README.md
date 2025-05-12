@@ -71,5 +71,5 @@ Find these under **Tools → Reference Sidebar Settings…**.
 ---
 
 ## License
-
+Released under the MIT License.  See [LICENSE](./LICENSE.md) for details.  
 
