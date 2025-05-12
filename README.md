@@ -1,9 +1,9 @@
-# Deck-Specific Reference Image Sidebar
+![](images/physics.gif)
 
-Keep diagrams, cheat-sheets, or pathway charts **always at hand** while you study.  
-This add-on lets you upload one or more images per deck and view them in a zoomable sidebar during reviews.
+# Reference Image Sidebar
 
-[//]: # (![preview GIF]&#40;img/preview.gif&#41;)
+Keep diagrams, cheat-sheets, or pathway charts **always at hand** while you study each deck.
+This add-on lets you upload one or more images per deck and view them in a zoomable sidebar during reviews
 
 ---
 
@@ -12,9 +12,12 @@ This add-on lets you upload one or more images per deck and view them in a zooma
 * **Sidebar toggle** &nbsp;`Alt + R`  
 * **Per-deck storage** – images only appear with their linked deck  
 * **Upload button** – copies files into Anki’s media folder automatically  
+  ![](images/ptable_equations.gif)  
 * **Image switcher** – dropdown to cycle through multiple references  
 * **Zoom** – `Ctrl/⌘` + wheel, pinch gesture, or ± buttons  
+  ![](images/opening.gif)  
 * **Manage dialog** – Tools → Reference Images… to delete or re-assign  
+  ![](images/manage.gif)  
 * **Preferences** – Tools → Reference Sidebar Settings… (default zoom, auto-show, width)
 
 ---
@@ -40,20 +43,20 @@ Anki 23 or newer (Qt 6 build) is recommended.  Limited Qt 5 compatibility is inc
 
 ## Shortcuts
 
-| Action | Shortcut |
-|--------|----------|
-| Toggle sidebar | **Alt + R** |
-| Zoom in | **Ctrl/⌘ + wheel-up** or **+** button |
-| Zoom out | **Ctrl/⌘ + wheel-down** or **–** button |
+| Action           | Shortcut                           |
+|------------------|------------------------------------|
+| Toggle sidebar   | **Alt + R**                        |
+| Zoom in          | **Ctrl/⌘ + wheel-up** or **+**     |
+| Zoom out         | **Ctrl/⌘ + wheel-down** or **–**   |
 
 ---
 
 ## Preferences
 
 * **Auto-show sidebar** when a review starts  
-* **Default zoom** level (0.25× – 4 ×)  
+* **Default zoom** level (0.25× – 4×)  
 * **Sidebar width**  
-* **Remember visibility** across sessions
+* **Remember visibility** across sessions  
 
 Find these under **Tools → Reference Sidebar Settings…**.
 
@@ -69,4 +72,4 @@ Find these under **Tools → Reference Sidebar Settings…**.
 
 ## License
 
-Released under the MIT License.  See [LICENSE](./LICENSE) for details.
+Released under the MIT License.  See [LICENSE](./LICENSE) for details.  
