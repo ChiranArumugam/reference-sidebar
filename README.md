@@ -24,7 +24,7 @@ This add-on lets you upload one or more images per deck and view them in a zooma
 
 ## Installation
 
-1. Download the latest **`.ankiaddon`** file from the [Releases](…) page *or* AnkiWeb.  
+1. Download the latest **`.ankiaddon`** file from the [AnkiWeb page](https://ankiweb.net/shared/info/919446148).  
 2. In Anki, choose **File → Import** and select the file.  
 3. Restart Anki.
 
