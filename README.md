@@ -42,12 +42,7 @@ Anki 23 or newer (Qt 6 build) is recommended.  Limited Qt 5 compatibility is inc
 ---
 
 ## Shortcuts
-
-| Action           | Shortcut                           |
-|------------------|------------------------------------|
-| Toggle sidebar   | **Alt + R**                        |
-| Zoom in          | **Ctrl/⌘ + wheel-up** or **+**     |
-| Zoom out         | **Ctrl/⌘ + wheel-down** or **–**   |
+* **Toggle sidebar:** Alt + R (only available in review mode)
 
 ---
 
