@@ -1,18 +1,14 @@
 {
   "name": "Reference Image Sidebar",
-  "id": "ref_sidebar",
+  "package": "reference_sidebar",
   "author": "Chiran Arumugam",
-  "description": "Upload reference images per deck, view them in a sidebar while reviewing.",
+  "description": "Upload reference images per deck and view them in a sidebar while reviewing.",
   "version": "0.9.0",
-  "min_point_version": 24,
-  "max_point_version": 24,
-  "package": {
-    "modules": [
-      "__init__",
-      "sidebar",
-      "manage",
-      "prefs",
-      "config"
-    ]
-  }
+  "modules": [
+    "__init__",
+    "sidebar",
+    "manage",
+    "prefs",
+    "config"
+  ]
 }
